@@ -11,7 +11,7 @@ import { transition, getFilename, getDownloadUrl } from "./common.js";
 import componentMetadata from "./application_image_metadata.js";
 import componentPager, { init as initPager } from "./component_pager.js";
 
-import { renderMenubar, buttonDownload } from "./component_menubar.js";
+import { renderMenubar, buttonDownload, buttonFullscreen } from "./component_menubar.js";
 
 export default function(render) {
     const $page = createElement(`
@@ -27,7 +27,11 @@ export default function(render) {
         </div>
     `);
     render($page);
-    renderMenubar(qs($page, "component-menubar"), buttonDownload(getFilename(), getDownloadUrl()));
+    renderMenubar(
+        qs($page, "component-menubar"),
+        buttonDownload(getFilename(), getDownloadUrl()),
+        buttonFullscreen(qs($page, ".component_image_container")),
+    );
     transition(qs($page, ".component_image_container"));
 
     const removeLoader = createLoader(qs($page, ".images_wrapper"));
